@@ -306,13 +306,141 @@ searchInput.addEventListener("keyup",()=>{
 
 });
 
-/* ================= DARK MODE ================= */
+/* ================= AI CHAT ================= */
 
-const darkBtn = document.getElementById("dark-mode-btn");
+const sendBtn = document.getElementById("send-btn");
 
-darkBtn.addEventListener("click",()=>{
+const chatInput = document.getElementById("chat-input");
 
-  document.body.classList.toggle("dark-mode");
+const chatBody = document.getElementById("chat-body");
+
+/* SEND MESSAGE */
+
+function sendMessage(){
+
+  const userText = chatInput.value.trim();
+
+  if(userText === ""){
+    return;
+  }
+
+  /* USER MESSAGE */
+
+  const userMessage = document.createElement("div");
+
+  userMessage.classList.add("user-message");
+
+  userMessage.innerText = userText;
+
+  chatBody.appendChild(userMessage);
+
+  /* AUTO SCROLL */
+
+  chatBody.scrollTop = chatBody.scrollHeight;
+
+  /* AI RESPONSE */
+
+  setTimeout(()=>{
+
+    const aiMessage = document.createElement("div");
+
+    aiMessage.classList.add("ai-message");
+
+    /* SIMPLE AI RESPONSES */
+
+    let response = "Try healthy protein snacks and stay hydrated!";
+
+    if(userText.toLowerCase().includes("protein")){
+
+      response = "Protein bars, nuts, and greek yogurt are excellent protein snacks.";
+
+    }
+
+    else if(userText.toLowerCase().includes("weight loss")){
+
+      response = "For weight loss, try low-calorie snacks like fruits and oats.";
+
+    }
+
+    else if(userText.toLowerCase().includes("diet")){
+
+      response = "A balanced diet with protein, fiber, and healthy fats is recommended.";
+
+    }
+
+    else if(userText.toLowerCase().includes("fitness")){
+
+      response = "Daily workouts and healthy meals improve fitness progress.";
+
+    }
+
+    aiMessage.innerText = response;
+
+    chatBody.appendChild(aiMessage);
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+  },1000);
+
+  chatInput.value = "";
+
+}
+
+/* BUTTON CLICK */
+
+sendBtn.addEventListener("click",sendMessage);
+
+/* ENTER KEY */
+
+chatInput.addEventListener("keypress",(e)=>{
+
+  if(e.key === "Enter"){
+
+    sendMessage();
+
+  }
+
+});
+
+/* ================= THEME TOGGLE ================= */
+
+const themeToggle = document.getElementById("theme-toggle");
+
+/* LOAD SAVED THEME */
+
+window.addEventListener("load",()=>{
+
+  const savedTheme = localStorage.getItem("theme");
+
+  if(savedTheme === "dark"){
+
+    document.body.classList.add("dark-mode");
+
+    themeToggle.checked = true;
+
+  }
+
+});
+
+/* TOGGLE THEME */
+
+themeToggle.addEventListener("change",()=>{
+
+  if(themeToggle.checked){
+
+    document.body.classList.add("dark-mode");
+
+    localStorage.setItem("theme","dark");
+
+  }
+
+  else{
+
+    document.body.classList.remove("dark-mode");
+
+    localStorage.setItem("theme","light");
+
+  }
 
 });
 
@@ -385,3 +513,29 @@ shopNowBtn.addEventListener("click", () => {
   });
 
 })
+
+/* ================= COUNTER ANIMATION ================= */
+
+function counter(id, start, end, speed){
+
+  let obj = document.getElementById(id);
+
+  let current = start;
+
+  let timer = setInterval(() => {
+
+    current++;
+
+    obj.innerText = current + "+";
+
+    if(current >= end){
+      clearInterval(timer);
+    }
+
+  }, speed);
+
+}
+
+counter("users-count",0,500,5);
+counter("orders-count",0,1200,2);
+counter("plans-count",0,850,3);
