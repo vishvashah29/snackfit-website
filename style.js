@@ -402,43 +402,37 @@ chatInput.addEventListener("keypress",(e)=>{
 
 });
 
-/* ================= THEME TOGGLE ================= */
+/* ================= LIGHT & DARK MODE ================= */
 
 const themeToggle = document.getElementById("theme-toggle");
 
-/* LOAD SAVED THEME */
+/* ALWAYS START WITH LIGHT MODE */
 
 window.addEventListener("load",()=>{
 
-  const savedTheme = localStorage.getItem("theme");
+  document.body.classList.remove("dark-mode");
 
-  if(savedTheme === "dark"){
-
-    document.body.classList.add("dark-mode");
-
-    themeToggle.checked = true;
-
-  }
+  themeToggle.checked = false;
 
 });
 
-/* TOGGLE THEME */
+/* TOGGLE MODE */
 
 themeToggle.addEventListener("change",()=>{
 
   if(themeToggle.checked){
 
-    document.body.classList.add("dark-mode");
+    /* DARK MODE */
 
-    localStorage.setItem("theme","dark");
+    document.body.classList.add("dark-mode");
 
   }
 
   else{
 
-    document.body.classList.remove("dark-mode");
+    /* LIGHT MODE */
 
-    localStorage.setItem("theme","light");
+    document.body.classList.remove("dark-mode");
 
   }
 
